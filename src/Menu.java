@@ -3,79 +3,81 @@
  */
 
 import java.io.*;
+import java.util.*;
 public class Menu {
-    public static void main (String args[]){
-       BufferedReader br=new BufferedReader(new InputStreamReader(System.in) );
-        String fio;
-        int age;
-        int amt;
-        int sum;
 
+   public void menu(){
+       System.out.println("(1) Add new client");
+       System.out.println("(2) List clients");
+       System.out.println("(3) List clients with sort age");
+       System.out.println("(4) List clients with sort name");
+       System.out.println("(5) Delete client");
+       System.out.println("(6) Redact client");
+       System.out.println("(7) Show clients who have 5 and more amt");
+       System.out.println("(8) Show clients with sum: ");
+       System.out.println("(9) Exit");
+      }
 
-       FileWork fw = new FileWork();
+    public void  menu(int chice){
+        Scanner sc=new Scanner(System.in);
+        FileWork fw=new FileWork();
+        String info = null;
+     switch (chice){
+         case 1:{
+             System.out.println("Input Name(,)Surname(,)Age(,)Arm(,)Sum(,) :");
+              info = sc.nextLine();
+             try {
+                 fw.update(info);
+             } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+             }
+             break;
 
-        int choice=0;
-       Pacient p=new Pacient();
+         }
+         case 2: {
 
+             String line = null;
 
+             try {
+                 line = fw.read();
+             } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+             }
+             String[] list=line.split(",");
 
-
-        String[] menu={"(1)Данные о пациенте", "(2)Добавить нового пациента","(3)Список пациентов кабинета","(4)Выход"};
-
-while (choice!=4){
-    for(int i=0; i<menu.length; i++){
-        System.out.println(menu[i]);
-    }
-
-    try {
-        choice=Integer.parseInt(br.readLine());
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    if(choice==2){
-       System.out.println("Введте ФИО нового пациента(через пробел):");
-        try {
-            p.setFio(br.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Введте возрост");
-        try {
-            p.setAge(Integer.parseInt(br.readLine()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("количество обращений");
-        try {
-            p.setAmt(Integer.parseInt(br.readLine()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("общая сумма");
-        try {
-            p.setSum(Integer.parseInt(br.readLine()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-           fw.update(p.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }else {
-        if (choice == 1) {
-            try {
-                System.out.println(fw.read());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+              for(int i=1; i<list.length+1; i++){
+                System.out.print(" "+list[i-1]);
+                if(i%5==0){
+                    System.out.print("\n");
+                }
             }
-        }
-    }
-}
+         }
+         case 3:{
+             String line = null;
+             String[] list;
+
+             try {
+                 line = fw.read();
+             } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+             }
+             list = line.split(",");
+             int n=list.length/5;
+             String[][] mas=new String[n][5];
+             for(int i=0;i<n;i++){
+                 for(int j=0;j<5;j++){
+                     mas[i][j]=list[j+i];
+                     System.out.print(mas[i][j]+" ");
+                 }
+                 System.out.println();
+             }
+
+         }
 
 
+     }
+
     }
+
 }
+

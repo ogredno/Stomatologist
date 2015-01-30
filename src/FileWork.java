@@ -7,45 +7,66 @@ public class FileWork {
     public static String read() throws FileNotFoundException {
         File f = new File("D:/data.txt");
         StringBuilder sb = new StringBuilder();
+        BufferedReader in = new BufferedReader(new FileReader(f));
+
+        String s = null;
         try {
-            //Объект для чтения файла в буфер
-            BufferedReader in = new BufferedReader(new FileReader(f));
-            try {
-                //В цикле построчно считываем файл
-                String s;
-                while ((s = in.readLine()) != null) {
-                    sb.append(s);
-                    sb.append("\n");
-                }
-            } finally {
-                //Также не забываем закрыть файл
-                in.close();
+         s=in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+       return s;
+    }
+
+
+    public void update(String newText) throws FileNotFoundException {
+        File file = new File("D:/data.txt");
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
             }
-        } catch(IOException e) {
+            FileWriter out = new FileWriter(file, true);
+            try {
+                out.write(newText.toString());
+            } finally {
+                out.close();
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        //Возвращаем полученный текст с файла
-        return sb.toString();
     }
 
-    public  void update(String newText) throws FileNotFoundException {
-        File fileName = new File("D:/data.txt");
-        PrintWriter pw=new PrintWriter(fileName);
-        StringBuilder sb = new StringBuilder();
-        String oldFile = read();
-        System.out.println(oldFile);
-        System.out.println(newText);
-        //sb.append(newText);
-        //pw.write(sb.toString());
+   /* public static int rdLine(int i) {
+        File file = new File("D:/data.txt");
+        String[] sum;
+        int[] sum1;
+        int[] summax=new int[10];
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            BufferedReader in = new BufferedReader(new FileReader(file));
 
-    }
+            try {
+                String s;
+                while ((s = in.readLine()) != null) {
+                    s = in.readLine();
+                    sum = s.split(",");
+                    sum1 = Integer.parseInt(sum[3]);
+                    if (summax < sum1) {
+                        summax = sum1;
+                    }
+                }finally{
+                    in.close();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return sum1;
+        }
 
-
-
-
-    }
-
+    }*/
+}
 
 
 

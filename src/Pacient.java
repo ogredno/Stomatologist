@@ -54,11 +54,6 @@ public class Pacient {
 
     @Override
     public String toString() {
-        return "Pacient[" +
-                "fio='" + fio + '\'' +
-                ", age=" + age +
-                ", amt=" + amt +
-                ", sum=" + sum +
-                ']';
+        return  "" + fio +"," + age +"," + amt +"," + sum ;
     }
 }
