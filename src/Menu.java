@@ -12,7 +12,7 @@ public class Menu {
         int sum;
 
 
-       FileWork streamExam = new FileWork();
+       FileWork fw = new FileWork();
 
         int choice=0;
        Pacient p=new Pacient();
@@ -60,13 +60,19 @@ while (choice!=4){
         }
 
         try {
-            streamExam.write(p.toString());
+           fw.update(p.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-    }else if(choice==1){
-     System.out.println(p);
+    }else {
+        if (choice == 1) {
+            try {
+                System.out.println(fw.read());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 

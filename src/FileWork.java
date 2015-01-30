@@ -3,52 +3,55 @@
  */
 import java.io.*;
 public class FileWork {
-    // класс для чтения файла
-    private InputStream inputstream;
 
-    // класс для записи в файл
-    private OutputStream outputStream;
-
-    // путь к файлу который будем читать и записывать
-    private String path="D:/data.txt";
-
-    public void InputOutputStreamExam(String path) {
-        this.path = path;
-    }
-
-    // чтение файла используя InputStream
-    public void read() throws IOException {
-        // инициализируем поток на чтение
-        inputstream = new FileInputStream(path);
-
-        // читаем первый символ в байтах (ASCII)
-        int data = inputstream.read();
-        char content;
-        // по байтово читаем весь файл
-        while(data != -1) {
-            // преобразуем полученный байт в символ
-            content = (char) data;
-            // выводим посимвольно
-            System.out.print(content);
-            data = inputstream.read();
+    public static String read() throws FileNotFoundException {
+        File f = new File("D:/data.txt");
+        StringBuilder sb = new StringBuilder();
+        try {
+            //Объект для чтения файла в буфер
+            BufferedReader in = new BufferedReader(new FileReader(f));
+            try {
+                //В цикле построчно считываем файл
+                String s;
+                while ((s = in.readLine()) != null) {
+                    sb.append(s);
+                    sb.append("\n");
+                }
+            } finally {
+                //Также не забываем закрыть файл
+                in.close();
+            }
+        } catch(IOException e) {
+            throw new RuntimeException(e);
         }
-        // закрываем поток
-        inputstream.close();
+
+        //Возвращаем полученный текст с файла
+        return sb.toString();
     }
 
-    // запись в файл используя OutputStream
-    public void write(String st) throws IOException {
-        // инициализируем поток для вывода данных
-        // что позволит нам записать новые данные в файл
-        outputStream = new FileOutputStream(path);
-        // передаем полученную строку st и приводим её к byte массиву.
-        outputStream.write(st.getBytes());
-        // закрываем поток вывода
-        // только после того как мы закроем поток данные попадут в файл.
-        outputStream.close();
+    public  void update(String newText) throws FileNotFoundException {
+        File fileName = new File("D:/data.txt");
+        PrintWriter pw=new PrintWriter(fileName);
+        StringBuilder sb = new StringBuilder();
+        String oldFile = read();
+        System.out.println(oldFile);
+        System.out.println(newText);
+        //sb.append(newText);
+        //pw.write(sb.toString());
+
     }
 
-}
+
+
+
+    }
+
+
+
+
+
+
+
 
 
 
