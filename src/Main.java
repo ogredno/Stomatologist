@@ -8,14 +8,14 @@ public class Main {
         Menu menu=new Menu();
         Scanner sc=new Scanner(System.in);
         int choice;
-      lb:  do{
+        while(true){
             menu.menu();
            choice= sc.nextInt();
             if(choice<=0 || choice>9){
              System.out.println("Pls Input number of menu");
-                continue lb;
+                break;
             }else
            menu.menu(choice);
-        }while(choice!=9);
+        }
     }
 }

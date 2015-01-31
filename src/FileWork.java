@@ -36,6 +36,52 @@ public class FileWork {
         }
     }
 
+    public int sizeFile(){
+        File f = new File("D:/data.txt");
+        StringBuilder sb = new StringBuilder();
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader(f));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String s = null;
+        try {
+            s=in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int size=s.length();
+        return  size;
+    }
+
+    public static String masFile(int i){
+
+        File f = new File("D:/data.txt");
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader(f));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String s = null;
+        try {
+            s=in.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] list=s.split(",");
+        String ret=list[i];
+        return ret;
+
+    }
+
+
+
+
+    }
+
    /* public static int rdLine(int i) {
         File file = new File("D:/data.txt");
         String[] sum;
@@ -66,7 +112,7 @@ public class FileWork {
         }
 
     }*/
-}
+
 
 
 
