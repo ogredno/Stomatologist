@@ -2,22 +2,17 @@
  * Created by серега on 30.01.2015.
  */
 public class Pacient {
-   private String fio;
-   private int age;
-   private int amt;
-   private int sum;
+    private String fio;
+    private int age;
+    private int arm;
+    private int sum;
 
-    public Pacient(String fio, int age, int amt, int sum) {
+
+    public Pacient(String fio, int age, int arm, int sum) {
         this.fio = fio;
         this.age = age;
-        this.amt = amt;
+        this.arm = arm;
         this.sum = sum;
-    }
-    public Pacient() {
-        this.fio = "NULL";
-        this.age = 0;
-        this.amt = 0;
-        this.sum = 0;
     }
 
     public String getFio() {
@@ -36,12 +31,12 @@ public class Pacient {
         this.age = age;
     }
 
-    public int getAmt() {
-        return amt;
+    public int getArm() {
+        return arm;
     }
 
-    public void setAmt(int amt) {
-        this.amt = amt;
+    public void setArm(int arm) {
+        this.arm = arm;
     }
 
     public int getSum() {
@@ -54,6 +49,6 @@ public class Pacient {
 
     @Override
     public String toString() {
-        return  "" + fio +"," + age +"," + amt +"," + sum ;
+        return fio+" "+age+" "+arm+" "+sum;
     }
 }

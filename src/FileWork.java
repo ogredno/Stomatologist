@@ -1,125 +1,103 @@
-/**
- * Created by серега on 30.01.2015.
- */
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.IllegalFormatException;
+import java.util.Scanner;
+import java.util.Locale;
+import static java.util.Collections.swap;
+import java.text.Collator;
+
+/**
+ * Created by Александр on 31.01.2015.
+ */
 public class FileWork {
+    Collator collator = Collator.getInstance(Locale.US);
+    private static final File fileName = new File("D:/data.txt");
+    public ArrayList<Pacient> pacients;
 
-    public static String read() throws FileNotFoundException {
-        File f = new File("D:/data.txt");
-        StringBuilder sb = new StringBuilder();
-        BufferedReader in = new BufferedReader(new FileReader(f));
+    public FileWork() {
+        pacients = new ArrayList<Pacient>();
+        read();
+    }
 
-        String s = null;
+    public void read() {
+        StringBuilder stringBuilder = new StringBuilder();
         try {
-         s=in.readLine();
+            BufferedReader in = new BufferedReader(new FileReader(fileName));
+            try {
+                String s;
+                while ((s = in.readLine()) != null) {
+                    String[] pacientLine = s.split(",");
+                    int age = 0;
+                    int arm=0;
+                    int sum=0;
+                    try {
+                        age = Integer.parseInt(pacientLine[1]);
+                        arm=Integer.parseInt(pacientLine[2]);
+                        sum=Integer.parseInt(pacientLine[3]);
+                    } catch (IllegalFormatException e) {
+                        System.out.println("Illegal age format!");
+                    }
+                    pacients.add(new Pacient(pacientLine[0],age,arm,sum));
+                }
+            } catch (IOException e) {
+                System.out.println("�������� � ������� ����!");
+            } finally {
+                in.close();
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("���� �� �������!");
         }
-       return s;
     }
 
 
-    public void update(String newText) throws FileNotFoundException {
-        File file = new File("D:/data.txt");
+    public void savePacient(Pacient pacient) {
+        pacients.add(pacient);
         try {
-            if (!file.exists()) {
-                file.createNewFile();
+            if (!fileName.exists()) {
+                fileName.createNewFile();
             }
-            FileWriter out = new FileWriter(file, true);
+            FileWriter out = new FileWriter(fileName, true);
             try {
-                out.write(newText.toString());
+                out.write(pacient.toString() + "\n");
             } finally {
                 out.close();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("�������� � ������� � ����!");
         }
     }
 
-    public int sizeFile(){
-        File f = new File("D:/data.txt");
-        StringBuilder sb = new StringBuilder();
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new FileReader(f));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        String s = null;
-        try {
-            s=in.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int size=s.length();
-        return  size;
+    public Pacient getNewPacient() {
+        System.out.println("Enter Name(space)Surname:");
+        Scanner scanner = new Scanner(System.in);
+        String fio = scanner.nextLine();
+        System.out.println("Enter age: ");
+        int age = scanner.nextInt();
+        System.out.println("Enter arm: ");
+        int arm = scanner.nextInt();
+        System.out.println("Enter sum: ");
+        int sum = scanner.nextInt();
+        return new Pacient(fio,age,arm,sum);
     }
 
-    public static String masFile(int i){
-
-        File f = new File("D:/data.txt");
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new FileReader(f));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String s = null;
-        try {
-            s=in.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String[] list=s.split(",");
-        String ret=list[i];
-        return ret;
-
-    }
-
-
-
-
-    }
-
-   /* public static int rdLine(int i) {
-        File file = new File("D:/data.txt");
-        String[] sum;
-        int[] sum1;
-        int[] summax=new int[10];
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-            BufferedReader in = new BufferedReader(new FileReader(file));
-
-            try {
-                String s;
-                while ((s = in.readLine()) != null) {
-                    s = in.readLine();
-                    sum = s.split(",");
-                    sum1 = Integer.parseInt(sum[3]);
-                    if (summax < sum1) {
-                        summax = sum1;
-                    }
-                }finally{
-                    in.close();
+    public void sortAgePacients(ArrayList<Pacient> pacients) {
+        for (int i = 0; i < pacients.size() - 1; i++)
+            for (int j = 0; j <pacients.size() - i - 1; j++)
+                if (pacients.get(j).getAge() > pacients.get(j + 1).getAge()) {
+                    swap(pacients, j, j + 1);
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+    }
+
+    public void sortNamePacients(ArrayList<Pacient> pacients){
+
+        for (int i = 0; i < pacients.size() - 1; i++) {
+            for (int j = 0; j < pacients.size() - i - 1; j++) {
+                if (collator.compare(pacients.get(j).getFio(),pacients.get(j+1).getFio())>0) {
+                    swap(pacients, j, j + 1);
+                }
             }
-            return sum1;
         }
+    }
 
-    }*/
-
-
-
-
-
-
-
-
-
-
-
+}
