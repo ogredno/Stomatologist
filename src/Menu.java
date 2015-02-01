@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.*;
 
 public class Menu {
+    Scanner sc = new Scanner(System.in);
 
     public void menu() {
         System.out.println("(1) Add new client");
@@ -26,29 +27,36 @@ public class Menu {
         switch (chice) {
             case 1: {
                 fw.savePacient(new FileWork().getNewPacient());
-            }break;
+            }
+            break;
             case 2: {
                 showListOfPacients(fw.pacients);
                 break;
-                }
+            }
 
             case 3: {
-                new FileWork().sortAgePacients(fw.pacients);
-                showListOfPacients(fw.pacients);
-            break;
-            }
-            case 4: {
-                new FileWork().sortNamePacients(fw.pacients);
+                fw.sortAgePacients(fw.pacients);
                 showListOfPacients(fw.pacients);
                 break;
             }
-
+            case 4: {
+                fw.sortNamePacients(fw.pacients);
+                showListOfPacients(fw.pacients);
+                break;
+            }
+            case 5: {
+                showListOfPacients(fw.pacients);
+                System.out.println("Print index to delete:");
+                int choice = sc.nextInt();
+                fw.deletePacient(fw.pacients, choice - 1);
+            }
 
         }
 
     }
+
     private static void showListOfPacients(ArrayList<Pacient> pacients) {
-        System.out.println("List of Students: ");
+        System.out.println("List of Pacient: ");
         for (Pacient s : pacients) {
             System.out.println(s);
         }

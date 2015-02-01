@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String args[]){
         Menu menu=new Menu();
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         int choice = 0;
         while(choice!=9){
             menu.menu();

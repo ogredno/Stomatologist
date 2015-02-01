@@ -49,6 +49,6 @@ public class Pacient {
 
     @Override
     public String toString() {
-        return fio+" "+age+" "+arm+" "+sum;
+        return fio + " " + age + " " + arm + " " + sum;
     }
 }
